@@ -89,7 +89,7 @@ public class GdDisplay {
             diaFrame.getContentPane().removeAll();
 //                diaFrame.pack();
 //                        removeAll();
-            BufferedImage bi = new BufferedImage((int) frameBreedte, frameHoogte, BufferedImage.TYPE_3BYTE_BGR);
+            BufferedImage bi = new BufferedImage(frameBreedte, frameHoogte, BufferedImage.TYPE_3BYTE_BGR);
             diaFrame.getContentPane().add(new JLabel(new ImageIcon(bi)));
             diaFrame.getContentPane().add(new JLabel(new ImageIcon(imageVooricon)), BorderLayout.PAGE_END);
 //                diaFrame.pack();
