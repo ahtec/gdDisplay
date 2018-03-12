@@ -50,18 +50,24 @@ public class GdDisplay {
             diaFrame = new JFrame(gd.getDefaultConfiguration());
             frameHoogte = gd.getDisplayMode().getHeight();
             frameBreedte = gd.getDisplayMode().getWidth();
-            diaFrame.setSize(frameBreedte, frameHoogte);
+            diaFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            diaFrame.setUndecorated(true);
+
+
+//            diaFrame.setSize(frameBreedte, frameHoogte);
 
         } else {
 //            System.err.println("er is mar 1 scherm");
 
             GraphicsDevice gd = gs[0];
             diaFrame = new JFrame();
+            diaFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            diaFrame.setUndecorated(true);
             frameHoogte = gd.getDisplayMode().getHeight();
             frameBreedte = gd.getDisplayMode().getWidth();
         }
-        
-        diaFrame.setSize(frameBreedte, frameHoogte);
+
+//        diaFrame.setSize(frameBreedte, frameHoogte);
         diaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //                diaFrame.setBackground(Color.BLACK);
         diaFrame.getContentPane().setBackground(Color.BLACK);
@@ -70,7 +76,6 @@ public class GdDisplay {
 
 //        System.out.println(frameBreedte);
 //        System.out.println(frameHoogte);
-
         File keuzeFile = new File(stringKeuzeFile);
         try {
             Image imageToBeDisplayed = ImageIO.read(keuzeFile);
@@ -109,7 +114,7 @@ public class GdDisplay {
 //                diaFrame.pack();
             diaFrame.setVisible(true);
             diaFrame.setFocusable(Boolean.FALSE);
-//            diaFrame.setfullscreenFrame(keuzeFile);
+//            diaFrame.set   setfullscreenFrame(keuzeFile);
 //            Object[] keuze = keuzelijst.getSelectedValues();
 //            for (int i = 0; i < keuze.length; i++) {
 //            }
@@ -120,6 +125,7 @@ public class GdDisplay {
         }
 
     }
+
     public class clickListener extends MouseAdapter {
 
         @Override
@@ -129,7 +135,6 @@ public class GdDisplay {
 //        setVisible(false); //you can't see me!
 //        skipnumaardez = Boolean.FALSE;
 //            System.out.println(" Disposing Diaframe");
-
             diaFrame.dispose(); //Destroy the JFrame object
         }
     }
