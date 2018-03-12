@@ -6,9 +6,12 @@
 package gddisplay;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +30,7 @@ public class GdDisplay {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GdDisplay gdVar = new GdDisplay();
+        GdDisplay gdVar = new GdDisplay(args[0]);
         // TODO code application logic here
     }
     private Image imageVooricon;
@@ -35,13 +38,13 @@ public class GdDisplay {
     private int frameBreedte;
     JFrame diaFrame;
 
-    public GdDisplay() {
-        System.err.println("IOn gdsiaplsy");
+    public GdDisplay(String stringKeuzeFile) {
+//        System.err.println("IOn gdsiaplsy");
 //        \Users\G Doets\Pictures\oudeMotorToertocht2012\DSC_6615_2012-05-12_11-13-38.jpg
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
         if (gs.length > 1) {
-            System.err.println("dus er is nog een scherm en die gaan we gebruikne voor de diaas");
+//            System.err.println("dus er is nog een scherm en die gaan we gebruikne voor de diaas");
             GraphicsDevice gd = gs[1];
             gd.setFullScreenWindow(null);
             diaFrame = new JFrame(gd.getDefaultConfiguration());
@@ -50,26 +53,37 @@ public class GdDisplay {
             diaFrame.setSize(frameBreedte, frameHoogte);
 
         } else {
-            System.err.println("er is mar 1 scherm");
+//            System.err.println("er is mar 1 scherm");
 
             GraphicsDevice gd = gs[0];
             diaFrame = new JFrame();
             frameHoogte = gd.getDisplayMode().getHeight();
             frameBreedte = gd.getDisplayMode().getWidth();
         }
-        File keuzeFile = new File("\\Users\\G Doets\\Pictures\\oudeMotorToertocht2012\\", "DSC_6615_2012-05-12_11-13-38.jpg");
+        
+        diaFrame.setSize(frameBreedte, frameHoogte);
+        diaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//                diaFrame.setBackground(Color.BLACK);
+        diaFrame.getContentPane().setBackground(Color.BLACK);
+        diaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        diaFrame.addMouseListener(new clickListener());
+
+//        System.out.println(frameBreedte);
+//        System.out.println(frameHoogte);
+
+        File keuzeFile = new File(stringKeuzeFile);
         try {
             Image imageToBeDisplayed = ImageIO.read(keuzeFile);
             int widthImageToBeDisplayed = imageToBeDisplayed.getWidth(null);
             int heightImageToBeDisplayed = imageToBeDisplayed.getHeight(null);
-            System.out.print(widthImageToBeDisplayed + " ");
-            System.out.println(heightImageToBeDisplayed);
+//            System.out.print(widthImageToBeDisplayed + " ");
+//            System.out.println(heightImageToBeDisplayed);
 
             // portrait
             if (heightImageToBeDisplayed > widthImageToBeDisplayed) {
 
                 imageVooricon = imageToBeDisplayed.getScaledInstance(-1, frameHoogte, Image.SCALE_DEFAULT);
-                System.out.println(" geschaald op de vaste hoogte");
+//                System.out.println(" geschaald op de vaste hoogte");
 
             } else {
                 double factorPlaatje = widthImageToBeDisplayed / heightImageToBeDisplayed;
@@ -78,10 +92,10 @@ public class GdDisplay {
                 if (factorPlaatje > factorScherm) {
                     // schaal op breddte
                     imageVooricon = imageToBeDisplayed.getScaledInstance((int) frameBreedte, -1, Image.SCALE_DEFAULT);
-                    System.out.println(" geschaald op de vaste breedte " + factorPlaatje + " " + factorScherm);
+//                    System.out.println(" geschaald op de vaste breedte " + factorPlaatje + " " + factorScherm);
                 } else {
                     imageVooricon = imageToBeDisplayed.getScaledInstance(-1, frameHoogte, Image.SCALE_DEFAULT);
-                    System.out.println(" geschaald op de vaste hoogte " + factorPlaatje + " " + factorScherm);
+//                    System.out.println(" geschaald op de vaste hoogte " + factorPlaatje + " " + factorScherm);
                 }
 
             }
@@ -106,5 +120,17 @@ public class GdDisplay {
         }
 
     }
+    public class clickListener extends MouseAdapter {
 
+        @Override
+        public void mouseClicked(MouseEvent e) {
+//            myButton jButtonPressed = (myButton) event.getSource();
+
+//        setVisible(false); //you can't see me!
+//        skipnumaardez = Boolean.FALSE;
+//            System.out.println(" Disposing Diaframe");
+
+            diaFrame.dispose(); //Destroy the JFrame object
+        }
+    }
 }
